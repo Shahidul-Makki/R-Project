@@ -1,0 +1,13 @@
+po<-ggplot(det, aes(x=Percent.CD68, y=Percent.RP, color=KRP)) + 
+  geom_point(shape=19, size=5) +
+  xlab("Percent CD68") + ylab("Percent RP") +
+  theme(plot.title = element_text(colour = "grey35", size=20, hjust = 0.5), 
+        axis.title.x = element_text(colour = "grey35", size=18,  vjust = 0.5),
+        axis.title.y = element_text(colour = "grey35", size=18, vjust = 4.0, hjust = 0.55),
+        axis.text = element_text(color = "grey35", size = 18),
+        legend.text = element_text(size=14),
+        legend.title = element_text(colour = "grey35",size=18))
+po 
+
+pin<- po + geom_smooth(method = "lm", color = "black", fill= "grey75", size = 1.2, fullrange =TRUE)
+pin
