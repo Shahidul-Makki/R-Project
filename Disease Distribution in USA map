@@ -1,0 +1,39 @@
+library(ggplot2)
+library(ggmap)
+library(maps)
+library(mapdata)
+library(tidyverse)
+==================
+usa<- map_data("usa")
+head(USA)
+tail(usa)
+ggplot() + geom_polygon(data=usa, aes(x=long, y=lat, group = group)) + coord_fixed(1.3)
+states = map_data("state")
+States
+====
+tolower(KidneyDiseaseUSAStates$region) (to make the lower case: I joing they have to be in same case)
+=====
+KidneyDiseaseUSAStates$region <- as.character(KidneyDiseaseUSAStates$region)
+KidneyDiseaseUSAStates$kidneydisese <- as.character(KidneyDiseaseUSAStates$kidneydisese)  (change the character to make same)
+====
+loadedusa <- inner_join(states, KidneyDiseaseUSAStates, by = "region") (join the state map table with data table for coordinates)
+======
+ca_base <- ggplot(data = states, mapping = aes(x = long, y = lat, group = group)) + 
+  coord_fixed(1.3) + 
+  geom_polygon(color = "black", fill = "gray")
+=====
+map_USA <- ca_base + ggtitle("Kidney Disease") + 
+  theme(plot.title = element_text(colour = "black", size=14, hjust = .5), 
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank()) +
+  geom_polygon(data = loadedusa, aes(fill = Kidney.Disease), color = "white") +
+  geom_polygon(color = "black", fill = NA) +
+  scale_fill_continuous(high = "#132B43", low = "#56B1F7")
+#+
+  #theme_bw() + theme(panel.grid = element_blank("grey")) #+
+  #ditch_the_axes
+
+map_USA
+#chnage the legend title
+map_USA + labs(fill="Population")
